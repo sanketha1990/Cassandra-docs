@@ -1,0 +1,17 @@
+/home/ubuntu/node/bin/dsetool status
+
+To check the cassandra status. down or up.
+
+/home/ubuntu/node:$ python
+
+//Python code
+from cassandra.cluster import Cluster
+clusster = Cluster(protocol_version = 3)
+session = cluster.connect('killrvideo')
+session.execute("""select * from videos_by_tag""");
+
+//Java
+Cluster cluster = Cluster.builder().addContactPoint("127.0.0.1").build();
+		Session session = cluster.connect("killrvideo");
+		ResultSet result = session.execute("select * from videos_by_tag");
+		System.out.println("Result = " + result);

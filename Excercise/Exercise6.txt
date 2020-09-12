@@ -1,0 +1,44 @@
+
+PATH:
+/home/ubuntu/node/resources/cassandra/bin/
+
+1)./nodetool help
+
+2)./nodetool status
+
+3)./nodetool info
+
+4)/home/ubuntu/node/bin/dsetool status
+
+5)./nodetool describecluster
+
+6)./nodetool getlogginglevels
+
+7)./nodetool setlogginglevel org.apache.cassandra TRACE // Set logging level to TRACE
+
+8)./nodetool settraceprabability 0.1
+
+9)./nodetool drain
+
+10)./nodetool stopdaemon
+
+11)/home/ubuntu/node/bin/dse cassandra
+
+12)/home/ubuntu/node/resouces/cassandra/tools/bin/
+
+13)./cassandra-stress write n=50000 no-warmup -rate threads=1
+
+14)cd /home/ubuntu/node/resources/cassandra/bin
+./nodetool flush
+
+15)./nodetool status
+
+16)./cqlsh
+
+17)describe keyspaces;
+
+18)use keyspace1;
+
+19)describe tables;
+
+20)select * from standar1 limit 5;

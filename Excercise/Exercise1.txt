@@ -1,3 +1,14 @@
+Inside the /bin directory all the executables are stored
+Check the cassandra running status
+/home/ubuntu/node/bin
+./dsetool status
+
+Start cassandra
+/home/ubuntu/node/bin
+./dse cassandra
+
+
+
 Create keyspace killrvideo
 with replication ={ 'class':'simplestratergy','replication_factor':1};
 
