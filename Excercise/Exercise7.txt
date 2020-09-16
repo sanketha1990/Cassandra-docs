@@ -1,0 +1,47 @@
+PATH:
+cd /home/ubuntu/node/resources/cassandra/bin
+
+1)./nodetool stopdaemon
+
+2)cd /home/ubuntu
+rm -rf node //remove folder node
+
+3)Extract two times and move it to node1 and node2
+tar -xf dse-6.0.0-bin.tar.gz
+mv dse-6.0.0 node1
+labwork/config_node 1
+tar -xf dse-6.0.0-bin.tar.gz
+mv dse-6.0.0 node2
+labwork/config_node 2
+
+4)cd /home/ubuntu/node2/resources/cassandra/conf/
+ 
+vi cassandra.yaml
+add initial_token
+initial_token: 9223372036854775807
+
+5)In your terminal, start the first node via
+/home/ubuntu/node1/bin/dse cassandra
+
+6)cd /home/ubuntu/node1/resources/cassandra/bin
+./nodetool status
+
+7) Start the second node via 
+/home/ubuntu/node2/bin/dse cassandra
+
+8)/home/ubuntu/node1/resources/cassandra/bin/nodetool status
+
+9)/home/ubuntu/node2/resources/cassandra/bin/nodetool status
+
+10)CREATE KEYSPACE killrvideo WITH replication = {'class': 'SimpleStrategy','replication_factor': 1 };
+
+11)use killsvideo;
+
+12)create table videos(video_id uuid, added_date timestamp,title text, primary key(video_id)); 
+
+13)COPY videos(id, added_date, title)
+FROM '/home/ubuntu/labwork/data-files/videos.csv'
+WITH HEADER=TRUE;
+
+14)Create videos_by_tag(tag text, video_id uuid,added_date timestamp,title text, primary key((tag),added_date,video_id)) with clustering order by(added_date DESC);
+

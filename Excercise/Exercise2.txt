@@ -1,14 +1,29 @@
-cat /home/ubuntu/labwork/data-files/videos-by-tag.csv
+Inside the /bin directory all the executables are stored
+Check the cassandra running status
+/home/ubuntu/node/bin
+./dsetool status
 
-Go to cqlsh
-/home/ubuntu/node/resource/cassandra/bin/cqlsh
+Start cassandra
+/home/ubuntu/node/bin
+./dse cassandra
 
-Use killrvideo;
 
-Create table videos_by_tag(tag text,vedio_id timeuuid,added_date timestamp,title text, primary key(tag,vedio_id));
 
-copy videos_by_tag(tag,vedio_id,added_date,title) from '/home/ubuntu/labwork/data-files/videos-by-tag.csv' with header=true;
+Create keyspace killrvideo
+with replication ={ 'class':'simplestratergy','replication_factor':1};
 
-select * from videos_by_tag;
+Create table video(video_id timeuuid,added_date timestamp,title text, primary key(video_id));
+
+INSERT into video(video_id, added_date,title) values (1645ea59-14bd-11e5-a993-8138354b7e31,'2014-01-29','Cassandra History');
+INSERT into video(video_id, added_date,title) values (245e8024-14bd-11e5-9743-8238356b7e32,'2012-04-03','Cassandra & SSDs');
+INSERT into video(video_id, added_date,title) values (3452f7de-14bd-11e5-855e-8738355b7e3a,'2013-03-17','Cassandra Intro');
+INSERT into video(video_id, added_date,title) values (4845ed97-14bd-11e5-8a40-8338255b7e33,'2013-10-16','DataStax DevCenter');
+INSERT into video(video_id, added_date,title) values (5645f8bd-14bd-11e5-af1a-8638355b8e3a,'2013-04-16','What is DataStax Enterprise');
 
 Select * from video;
+
+TRUNCATE video;
+
+COPY video(video_id, added_date, title)
+FROM '/home/ubuntu/labwork/data-files/videos.csv'
+WITH HEADER=TRUE;

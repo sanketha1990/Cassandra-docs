@@ -1,0 +1,14 @@
+cat /home/ubuntu/labwork/data-files/videos-by-tag.csv
+
+Go to cqlsh
+/home/ubuntu/node/resource/cassandra/bin/cqlsh
+
+Use killrvideo;
+
+Create table videos_by_tag(tag text,vedio_id timeuuid,added_date timestamp,title text, primary key(tag,vedio_id));
+
+copy videos_by_tag(tag,vedio_id,added_date,title) from '/home/ubuntu/labwork/data-files/videos-by-tag.csv' with header=true;
+
+select * from videos_by_tag;
+
+Select * from video;
