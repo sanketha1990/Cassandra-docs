@@ -14,7 +14,7 @@ tar -xf dse-6.0.0-bin.tar.gz
 mv dse-6.0.0 node2
 labwork/config_node 2
 
-4)cd /home/ubuntu/node2/resources/cassandra/conf/
+4)cd /home/ubuntu/node2/resources/cassandra/conf/  
  
 vi cassandra.yaml
 add initial_token
