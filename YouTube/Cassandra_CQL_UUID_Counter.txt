@@ -1,0 +1,145 @@
+$ select car_make,car_model,writetime(car_model) from employee_by_car_make;
+
+$ Update employee_by_car_make set car_model='TRUCK' where car_make='BMW' and id=1;
+
+$ update employee_by_car_make using TTL 60 set car_model = 'TRUCK' where car_make ='BMW' and id = 2; // only for 60 seconds
+
+$ alter table employee_by_id add phone set<text> ;
+
+$ update employee_by_id set phone ={'345','454'} where id=1;
+
+$ update employee_by_id set phone= phone +{'555'} where id=1; // add new phone number to same collection
+
+$ update employee_by_id set phone= phone -{'454'} where id=1; // remove phone number
+
+$ update employee_by_id set phone={} where id=1; // remove all
+
+$ select * from employee_by_id where name='john' allow filtering; // allow filtering == not recommended
+
+cqlsh:test_keyspace> create index on employee_by_id(name); // not recommended to update the new index due to performance
+cqlsh:test_keyspace> select * from employee_by_id where name='john';
+
+
+UUID:
+
+cqlsh:test_keyspace> create table employee_by_uuid(id uuid primary key,first_name text,last_name text);
+cqlsh:test_keyspace> select * from employee_by_uuid ;
+
+ id | first_name | last_name
+----+------------+-----------
+
+(0 rows)
+cqlsh:test_keyspace> insert into employee_by_uuid(id, first_name , last_name ) values(uuid(),'tom','dunne');
+cqlsh:test_keyspace> select * from employee_by_uuid ;
+
+ id                                   | first_name | last_name
+--------------------------------------+------------+-----------
+ 0dc8046f-ac07-4e88-aea5-e153e739cb6e |        tom |     dunne
+
+(1 rows)
+cqlsh:test_keyspace> insert into employee_by_uuid(id, first_name , last_name ) values(uuid(),'tim','smith');
+cqlsh:test_keyspace> insert into employee_by_uuid(id, first_name , last_name ) values(uuid(),'gowda','samip');
+cqlsh:test_keyspace> select * from employee_by_uuid ;
+
+ id                                   | first_name | last_name
+--------------------------------------+------------+-----------
+ 93cf33f8-bec9-4b79-a968-e722ca7d91eb |        tim |     smith
+ a914e8bb-92e7-4be0-8fcb-cb3ebb44642c |      gowda |     samip
+ 0dc8046f-ac07-4e88-aea5-e153e739cb6e |        tom |     dunne
+
+(3 rows)
+
+cqlsh:test_keyspace> create table employee_by_timeuuid(id timeuuid,first_name text,last_name text);
+InvalidRequest: Error from server: code=2200 [Invalid query] message="No PRIMARY KEY specifed for table 'employee_by_timeuuid' (exactly one required)"
+cqlsh:test_keyspace> create table employee_by_timeuuid(id timeuuid primary key,first_name text,last_name text);
+cqlsh:test_keyspace> select * from employee_by_timeuuid ;
+
+ id | first_name | last_name
+----+------------+-----------
+
+(0 rows)
+cqlsh:test_keyspace> insert into employee_by_timeuuid (id, first_name , last_name ) values(now(),'tim','jones');
+cqlsh:test_keyspace> insert into employee_by_timeuuid (id, first_name , last_name ) values(now(),'ally','smith');
+cqlsh:test_keyspace> insert into employee_by_timeuuid (id, first_name , last_name ) values(now(),'kate','smith');
+cqlsh:test_keyspace> select * from employee_by_timeuuid ;
+
+ id                                   | first_name | last_name
+--------------------------------------+------------+-----------
+ 5a7865f0-f80b-11ea-8ef2-0965baed4827 |       ally |     smith
+ 5eb4b010-f80b-11ea-8ef2-0965baed4827 |       kate |     smith
+ 4d6031e0-f80b-11ea-8ef2-0965baed4827 |        tim |     jones
+
+(3 rows)
+
+
+ id                                   | first_name | last_name
+--------------------------------------+------------+-----------
+ 5a7865f0-f80b-11ea-8ef2-0965baed4827 |       ally |     smith
+ 5eb4b010-f80b-11ea-8ef2-0965baed4827 |       kate |     smith
+ 4d6031e0-f80b-11ea-8ef2-0965baed4827 |        tim |     jones
+
+(3 rows)
+cqlsh:test_keyspace> select * from employee_by_uuid  ;
+
+ id                                   | first_name | last_name
+--------------------------------------+------------+-----------
+ 93cf33f8-bec9-4b79-a968-e722ca7d91eb |        tim |     smith
+ a914e8bb-92e7-4be0-8fcb-cb3ebb44642c |      gowda |     samip
+ 0dc8046f-ac07-4e88-aea5-e153e739cb6e |        tom |     dunne
+
+(3 rows)
+
+
+Counters:
+
+cqlsh:test_keyspace> create table purchases_by_customer_id(id uuid primary key,purchases counter);
+cqlsh:test_keyspace> update purchases_by_customer_id set purchases = purchases +1 where id=uuid();
+cqlsh:test_keyspace> select * from purchases_by_customer_id ;
+
+ id                                   | purchases
+--------------------------------------+-----------
+ 8f419f08-4807-46a3-bc88-96a06008adf7 |         1
+
+(1 rows)
+cqlsh:test_keyspace> select * from purchases_by_customer_id ;
+
+ id                                   | purchases
+--------------------------------------+-----------
+ 8f419f08-4807-46a3-bc88-96a06008adf7 |         1
+
+(1 rows)
+cqlsh:test_keyspace> update purchases_by_customer_id set purchases = purchases +1 where id=uuid();
+cqlsh:test_keyspace> update purchases_by_customer_id set purchases = purchases +1 where id=uuid();
+cqlsh:test_keyspace> select * from purchases_by_customer_id ;
+
+ id                                   | purchases
+--------------------------------------+-----------
+ 8f419f08-4807-46a3-bc88-96a06008adf7 |         1
+ dff71f3a-70e9-4bdc-8ea4-8ae640378d5e |         1
+ f20966c1-3bb9-47b0-84ff-cbefa381bae8 |         1
+
+(3 rows)
+cqlsh:test_keyspace> update purchases_by_customer_id set purchases = purchases +1 where id=f20966c1-3bb9-47b0-84ff-cbefa381bae8;
+cqlsh:test_keyspace> select * from purchases_by_customer_id ;
+
+ id                                   | purchases
+--------------------------------------+-----------
+ 8f419f08-4807-46a3-bc88-96a06008adf7 |         1
+ dff71f3a-70e9-4bdc-8ea4-8ae640378d5e |         1
+ f20966c1-3bb9-47b0-84ff-cbefa381bae8 |         2
+
+(3 rows)
+cqlsh:test_keyspace> update purchases_by_customer_id set purchases = purchases -1 where id=dff71f3a-70e9-4bdc-8ea4-8ae640378d5e;
+cqlsh:test_keyspace> select * from purchases_by_customer_id ;
+
+ id                                   | purchases
+--------------------------------------+-----------
+ 8f419f08-4807-46a3-bc88-96a06008adf7 |         1
+ dff71f3a-70e9-4bdc-8ea4-8ae640378d5e |         0
+ f20966c1-3bb9-47b0-84ff-cbefa381bae8 |         2
+
+(3 rows)
+cqlsh:test_keyspac
+
+
+

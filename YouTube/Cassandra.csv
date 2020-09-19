@@ -1,0 +1,4 @@
+car_make, car_model, start_year,id,first_name, last_name,dept
+BMW,Hatchback,2019,1,Sanketh,CR,Automobile
+MERC,Saloon,2018,2,Samip,Gowda,Automobile
+AUDI,Hatchback,2020,3,Sam,Gowda,Automobile

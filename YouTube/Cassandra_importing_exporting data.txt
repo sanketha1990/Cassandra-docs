@@ -1,0 +1,45 @@
+cqlsh:test_keyspace> create table test_csv_import(car_make text, car_model text, start_year int,id int,first_name text, last_name text,dept text,primary key(car_make, car_model , start_year ,id));
+r
+
+IMPORT:
+
+cqlsh:test_keyspace> copy test_csv_import (car_make , car_model , start_year , id , first_name , last_name , dept ) from '/home/sanketha/Documents/Git/Cassandra.csv' with delimiter=',' and header=true;
+Using 3 child processes
+
+Starting copy of test_keyspace.test_csv_import with columns [car_make, car_model, start_year, id, first_name, last_name, dept].
+Processed: 3 rows; Rate:       3 rows/s; Avg. rate:       5 rows/s
+3 rows imported from 1 files in 0.603 seconds (0 skipped).
+cqlsh:test_keyspace> select * from test_csv_import ;
+
+ car_make | car_model | start_year | id | dept       | first_name | last_name
+----------+-----------+------------+----+------------+------------+-----------
+      BMW | Hatchback |       2019 |  1 | Automobile |    Sanketh |        CR
+     MERC |    Saloon |       2018 |  2 | Automobile |      Samip |     Gowda
+     AUDI | Hatchback |       2020 |  3 | Automobile |        Sam |     Gowda
+
+(3 rows)
+
+EXPORT:
+
+cqlsh:test_keyspace> copy test_csv_import TO '/home/sanketha/Documents/Git/Cassandra_export.csv' with delimiter=',';
+Using 3 child processes
+
+Starting copy of test_keyspace.test_csv_import with columns [car_make, car_model, start_year, id, dept, first_name, last_name].
+cqlshlib.copyutil.ExportProcess.write_rows_to_csv(): writing row
+cqlshlib.copyutil.ExportProcess.write_rows_to_csv(): writing row/s
+cqlshlib.copyutil.ExportProcess.write_rows_to_csv(): writing row
+Processed: 3 rows; Rate:       2 rows/s; Avg. rate:       3 rows/s
+3 rows exported to 1 files in 0.886 seconds.
+
+cqlsh:test_keyspace> copy test_csv_import(car_make , dept , first_name ) TO '/home/sanketha/Documents/Git/Cassandra_export2.csv' with delimiter=',';
+Using 3 child processes
+
+Starting copy of test_keyspace.test_csv_import with columns [car_make, dept, first_name].
+cqlshlib.copyutil.ExportProcess.write_rows_to_csv(): writing row
+cqlshlib.copyutil.ExportProcess.write_rows_to_csv(): writing row/s
+cqlshlib.copyutil.ExportProcess.write_rows_to_csv(): writing row/s
+Processed: 3 rows; Rate:       3 rows/s; Avg. rate:       3 rows/s
+3 rows exported to 1 files in 0.959 seconds.
+
+cqlsh:test_keyspace> 
+
