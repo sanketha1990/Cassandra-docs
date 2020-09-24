@@ -2,7 +2,7 @@ PATH:
 cd /home/ubuntu/node/resources/cassandra/bin
 
 1)./nodetool stopdaemon
-
+  
 2)cd /home/ubuntu
 rm -rf node //remove folder node
 
