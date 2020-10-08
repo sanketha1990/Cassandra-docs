@@ -1,0 +1,50 @@
+CREATE TYPE IF NOT EXISTS video_encoding (
+ encoding TEXT,
+ height INT,
+ width INT,
+ bit_rates SET<TEXT>
+);
+
+
+CREATE TABLE videos_by_actor (
+ actor text,
+ added_date timestamp,
+ video_id timeuuid,
+ character_name text,
+ description text,
+ encoding frozen<video_encoding>,
+ tags set<text>,
+ title text,
+ user_id uuid,
+ PRIMARY KEY (actor, added_date)
+) WITH CLUSTERING ORDER BY ( added_date asc);
+
+
+COPY videos_by_actor
+(actor,added_date,video_id,character_name,description,encoding,
+tags,title,user_id) FROM '/home/sanketha/Documents/gitHub/Others/ds220-6.0-labwork/labwork/denormalization/videos_by_actor.csv' WITH HEADER = true;
+
+
+select * from videos_by_actor where actor='Tom Hanks';
+
+CREATE TABLE videos_by_genre (
+ genre text,
+ added_date timestamp,
+ video_id timeuuid,
+ description text,
+ encoding frozen<video_encoding>,
+ tags set<text>,
+ title text,
+ user_id uuid,
+ PRIMARY KEY ((genre),added_date)
+) WITH CLUSTERING ORDER BY (added_date asc);
+
+
+COPY videos_by_genre
+(genre,added_date,video_id,description,encoding,tags,title,
+user_id) FROM '/home/sanketha/Documents/gitHub/Others/ds220-6.0-labwork/labwork/denormalization/videos_by_genre.csv' WITH HEADER = true;
+
+
+SELECT * FROM videos_by_genre WHERE genre = 'Musical' LIMIT 10;
+
+

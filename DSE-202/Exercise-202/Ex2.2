@@ -1,0 +1,35 @@
+CREATE TABLE bad_videos_by_tag_year (
+ tag text,
+ added_year int,
+ added_date timestamp,
+ title text,
+ description text,
+ user_id uuid,
+ video_id timeuuid,
+ PRIMARY KEY ((video_id))
+);
+
+COPY bad_videos_by_tag_year (tag, added_year, video_id,
+added_date, description, title, user_id) FROM
+'/home/sanketha/Documents/gitHub/Others/ds220-6.0-labwork/labwork/clustering/videos_by_tag_year.csv' WITH HEADER=true;
+
+SELECT COUNT(*)
+FROM bad_videos_by_tag_year;
+
+# nasty data model
+============================================
+
+CREATE TABLE videos_by_tag_year (
+ tag text,
+ added_year int,
+ video_id timeuuid,
+ added_date timestamp,
+ description text,
+ title text,
+ user_id uuid,
+ PRIMARY KEY ((added_year),title)
+) WITH CLUSTERING ORDER BY ( title desc);
+
+
+COPY videos_by_tag_year(tag, added_year, video_id,
+added_date, description, title, user_id) FROM '/home/sanketha/Documents/gitHub/Others/ds220-6.0-labwork/labwork/clustering/videos_by_tag_year.csv' WITH HEADER=true
