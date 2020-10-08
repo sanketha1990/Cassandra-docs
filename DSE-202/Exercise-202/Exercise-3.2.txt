@@ -1,0 +1,8 @@
+/home/sanketha/Documents/gitHub/Others/ds220-6.0-labwork/labwork/counters
+
+
+CREATE TABLE videos_count_by_tag (
+video_count counter,
+tag text,
+primary key(tag)
+);
