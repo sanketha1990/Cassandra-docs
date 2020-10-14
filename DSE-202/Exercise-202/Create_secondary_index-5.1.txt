@@ -1,0 +1,15 @@
+Create secondary index
+
+Syntax:
+CREATE INDEX [index name] ON [table name]([field name])
+
+Example:
+create index secondary_index on actors_by_video (charactor_name) ;
+
+Query the table as follows to validate your work:
+select * from actors_by_video where video_id=8a33c0c5-0ef2-11e5-9571-8438355b7e3a and character_name='Paul Dynan';
+select * from actors_by_video where character_name='Paul Dynan';
+
+DROP secondary index:
+drop index secondary_index;
+

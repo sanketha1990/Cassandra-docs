@@ -1,0 +1,34 @@
+1)copy videos from '/home/sanketha/Documents/gitHub/Others/ds220-6.0-labwork/labwork/final/videos.csv' with header=true;
+cqlsh:killr_video> copy videos from '/home/sanketha/Documents/gitHub/Others/ds220-6.0-labwork/labwork/final/videos.csv' with header=true;
+Using 3 child processes
+
+Starting copy of killr_video.videos with columns [video_id, avg_rating, description, encoding, genres, mpaa_rating, preview_thumbnails, release_date, tags, title, type, url, user_id].
+Processed: 20806 rows; Rate:    1453 rows/s; Avg. rate:    1340 rows/s
+20806 rows imported from 1 files in 15.532 seconds (0 skipped).
+
+2)copy latest_videos from '/home/sanketha/Documents/gitHub/Others/ds220-6.0-labwork/labwork/final/latest_videos.csv' with header=true;
+
+cqlsh:killr_video> copy latest_videos from '/home/sanketha/Documents/gitHub/Others/ds220-6.0-labwork/labwork/final/latest_videos.csv' with header=true;
+Using 3 child processes
+
+Starting copy of killr_video.latest_videos with columns [video_bucket, video_id, preview_thumbnails, tags, title, type].
+Processed: 20806 rows; Rate:    6097 rows/s; Avg. rate:    7371 rows/s
+20806 rows imported from 1 files in 2.823 seconds (0 skipped).
+
+3)copy trailers_by_video from '/home/sanketha/Documents/gitHub/Others/ds220-6.0-labwork/labwork/final/trailers_by_video.csv' with header=true;
+
+cqlsh:killr_video> copy trailers_by_video from '/home/sanketha/Documents/gitHub/Others/ds220-6.0-labwork/labwork/final/trailers_by_video.csv' with header=true;
+Using 3 child processes
+
+Starting copy of killr_video.trailers_by_video with columns [video_id, title, trailer_id, preview_thumbnails, tags, type].
+Processed: 3246 rows; Rate:    1934 rows/s; Avg. rate:    3453 rows/s
+3246 rows imported from 1 files in 0.940 seconds (0 skipped).
+
+4)copy  actor_by_video from '/home/sanketha/Documents/gitHub/Others/ds220-6.0-labwork/labwork/final/actors_by_video.csv' with header=true;
+cqlsh:killr_video> copy  actors_by_video from '/home/sanketha/Documents/gitHub/Others/ds220-6.0-labwork/labwork/final/actors_by_video.csv' with header=true;
+Using 3 child processes
+
+Starting copy of killr_video.actors_by_video with columns [video_id, actor_name, character_name].
+Processed: 81659 rows; Rate:   13799 rows/s; Avg. rate:   14737 rows/s
+81659 rows imported from 1 files in 5.541 seconds (0 skipped).
+
